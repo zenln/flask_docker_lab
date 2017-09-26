@@ -1,10 +1,9 @@
 sudo: required
-
 language: python
-
 services:
   docker
-
 before-install:
   - docker-compose build
   - docker-compose up
+script:
+  - linkchecker --anchors --cookies --check-html --check-css localhost:5000
