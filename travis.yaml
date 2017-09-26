@@ -1,0 +1,10 @@
+sudo: required
+
+language: python
+
+services:
+  docker
+
+before-install:
+  - docker-compose build
+  - docker-compose up

@@ -5,8 +5,8 @@
 	<div class=jumbotron>
 		<h1>Hello World!</h1>
 		<p>
-			This Flask application was deployed into AWS Lambda using Zappa. 
-			It is made beautiful by the Boostrap CSS libray
+			This Flask application was built in a Docker container and deployed to
+			AWS ECS using Travis Continous Integration Server.
 		</p>
 	</div>
 
@@ -14,7 +14,7 @@
 		<div class=col-md-3>
 			<div class=thumbnail>
 				<a href=http://flask.pocoo.org/>
-					<img src={{ config.STATIC_URL }}flask.png width=250 
+					<img src={{ config.STATIC_URL }}flask.png width=250
 						style="margin-top:20px;">
 				</a>
 				<p style="margin-top:2em;">
@@ -26,15 +26,25 @@
 
 		<div class=col-md-3>
 			<div class=thumbnail>
-				<a href=https://www.zappa.io/>
-					<img src={{ config.STATIC_URL }}zappa.jpg width=260>
+				<a href=https://www.docker.com/>
+					<img src={{ config.STATIC_URL }}docker.png width=260>
 				</a>
 				<p style="margin-top:1em;">
-					Zappa makes it super easy to build and deploy all Python WSGI 
-					applications on AWS Lambda + API Gateway. Think of it as 
-					"serverless" web hosting for your Python apps. That means 
-					infinite scaling, zero downtime, zero maintenance - and at a 
-					fraction of the cost of your current deployments!
+					Docker is an open platform for developers and sysadmins to build,
+					ship, and run distributed applications, whether on laptops, data
+					center VMs, or the cloud.
+				</p>
+			</div>
+		</div>
+
+		<div class=col-md-3>
+			<div class=thumbnail>
+				<a href=http://travis.ci>
+					<img src={{ config.STATIC_URL }}travis.png width=160>
+				</a>
+				<p style="margin-top:1em;">
+					Travis CI is a hosted, distributed[2] continuous integration service
+					used to build and test software projects hosted at GitHub.
 				</p>
 			</div>
 		</div>
@@ -42,30 +52,16 @@
 		<div class=col-md-3>
 			<div class=thumbnail>
 				<a href=https://aws.amazon.com/lambda/>
-					<img src={{ config.STATIC_URL }}lambda.png width=180>
+					<img src={{ config.STATIC_URL }}ecs.png width=180>
 				</a>
 				<p style="margin-top:1em;">
-					AWS Lambda lets you run code without provisioning or managing 
-					servers. You pay only for the compute time you consume — there 
-					is no charge when your code is not running.
+					Amazon EC2 Container Service (ECS) allows you to easily run and
+					manage Docker-enabled applications across a cluster of Amazon EC2
+					instances.
 				</p>
 			</div>
 		</div>
 
-		<div class=col-md-3>
-			<div class=thumbnail>
-				<a href=http://getbootstrap.com>
-					<img src={{ config.STATIC_URL }}bootstrap.png width=160>
-				</a>
-				<p style="margin-top:1em;">
-					Bootstrap is an open source toolkit for developing with HTML, 
-					CSS, and JS. Quickly prototype your ideas or build your entire 
-					app with our Sass variables and mixins, responsive grid system,
-					extensive prebuilt components, and powerful plugins built on 
-					jQuery.
-				</p>
-			</div>
-		</div>
 
 	</div>
 </div>

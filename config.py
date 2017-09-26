@@ -2,25 +2,24 @@
 import os
 
 # Title of the site
-SITE_TITLE = 'Flask Lambda Lab'
+SITE_TITLE = 'Flask Docker Lab'
 # The URL for static files/images
-STATIC_URL = 'https://s3-us-west-2.amazonaws.com/flasklambdalab-static/'
-# The name of the 
-FAV_ICON = STATIC_URL + 'lambda_icon.png'
+STATIC_URL = 'https://s3-us-west-2.amazonaws.com/flaskdockerlab-static/'
+# The name of the
+FAV_ICON = STATIC_URL + 'docker-icon.png'
 
 # Pages to show on the nav menu (provide a url or route)
 PAGES=[
     {'title':'Lab Blog',
-        'url':'https://www.cloudshiftstrategies.com/flasklambdalab.html'},
+        'url':'https://www.cloudshiftstrategies.com/flaskdockerlab.html'},
     {'title':'Load Gen','route':'loadgen'},
-    {'title':'Gallery','route':'gallery'},
-    {'title':'Upload','route':'upload'},
     ]
 
 # Bootstrap CSS files to include in each page included in ./app/templates/base.html
 CSS_INCLUDES=[
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-    'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css',
+#    'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css',
+    'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css',
     'https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css',
     ]
 
