@@ -2,7 +2,9 @@ version: '3'
 services:
   app:
     build: ./app
+    image: flask_docker_lab
     ports:
      - "5000:5000"
     volumes:
      - ./app:/code
+    container_name: flask_docker_lab

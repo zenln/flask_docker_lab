@@ -1,25 +1,18 @@
-sudo:
-  # sudo is required for docker builds
-  required
-language:
-  # most of our test suite will be built on python
-  python
-services:
-  # We need the docker toolset in this test env
-  docker
+sudo: required
+language: python
+services: docker
 install:
-  # Install the tools required for the test script:
-  - pip install -r ./infrastructure/requirements-testsuite.txt
-  # Build the container(s) specified in the docker-compose.yml
-  - docker-compose build
-  # Start the container(s) specified in the docker-compose.yml
-  - docker-compose up -d
+- pip install -r ./infrastructure/requirements-testsuite.txt
+- docker-compose build
+- docker-compose up -d
 script:
-  # Check validity of all URLs in the "app" container we just started
-  - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
-#after_success:
-# - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-# - export REPO=bhavikk/level-three-rest
-# - docker tag $REPO:$COMMIT $REPO:$TAG
-# - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
-# - docker push $REPO
+- linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
+after_success:
+- docker login -u ${ECR_USER} -p ${ECR_PASS} ${ECR_URL}
+- docker tag flask_docker_lab:latest ${ECR_DNS}/flask_docker_lab:latest
+- docker push ${ECR_DNS}/flask_docker_lab_ecr:latest
+
+# REMOVE THE FOLLOWING BEFORE LAB COMMIT
+before_install:
+- openssl aes-256-cbc -K $encrypted_771bca74694a_key -iv $encrypted_771bca74694a_iv
+  -in ecr.secret.enc -out ecr.secret -d
