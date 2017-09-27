@@ -1,11 +1,10 @@
 sudo: required
 language: python
-services:
-  docker
+services: docker
 install:
   - pip install -r ./infrastructure/requirements-testsuite.txt
   - docker-compose build
-  - docker-compose run -d
+  - docker-compose up -d
 script:
   - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
 #after_success:
