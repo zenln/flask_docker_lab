@@ -1,11 +1,21 @@
-sudo: required
-language: python
-services: docker
+sudo:
+  # sudo is required for docker builds
+  required
+language:
+  # most of our test suite will be built on python
+  python
+services:
+  # We need the docker toolset in this test env
+  docker
 install:
+  # Install the tools required for the test script:
   - pip install -r ./infrastructure/requirements-testsuite.txt
+  # Build the container(s) specified in the docker-compose.yml
   - docker-compose build
+  # Start the container(s) specified in the docker-compose.yml
   - docker-compose up -d
 script:
+  # Check validity of all URLs in the "app" container we just started
   - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
 #after_success:
 # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
