@@ -1,8 +1,8 @@
 version: '3'
 services:
-  web:
-    build: .
+  app:
+    build: ./app
     ports:
      - "5000:5000"
     volumes:
-     - .:/code
+     - ./app:/code

@@ -2,8 +2,15 @@ sudo: required
 language: python
 services:
   docker
-before-install:
+install:
+  - pip install -r ./infrastructure/requirements-testsuite.txt
   - docker-compose build
-  - docker-compose up
+  - docker-compose run -d
 script:
   - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
+#after_success:
+# - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+# - export REPO=bhavikk/level-three-rest
+# - docker tag $REPO:$COMMIT $REPO:$TAG
+# - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
+# - docker push $REPO
