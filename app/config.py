@@ -13,7 +13,6 @@ PAGES=[
     {'title':'Lab Blog',
         'url':'https://www.cloudshiftstrategies.com/flaskdockerlab.html'},
     {'title':'Load Gen','route':'loadgen'},
-    {'title':'Bad Link','url':'http://something.wrong'},
     ]
 
 # Bootstrap CSS files to include in each page included in ./app/templates/base.html
