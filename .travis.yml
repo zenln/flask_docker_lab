@@ -8,9 +8,7 @@ install:
 script:
 - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
 after_success:
-- docker_push.sh
-
-# REMOVE THE FOLLOWING BEFORE LAB COMMIT
+- "./docker_push.sh"
 before_install:
 - openssl aes-256-cbc -K $encrypted_771bca74694a_key -iv $encrypted_771bca74694a_iv
-  -in ecr.secret.enc -out ecr.secret -d
+  -in ecr.secrets.enc -out ecr.secrets -d

@@ -18,6 +18,8 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
   - Connect to AWS Developer Desktop Browser: http://<public_ip> pass: dockerlab
     or vnc to <public_ip>:5901 pass:dockerlab (easier)
 5. Download the code and make it your own
+  - git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
   - git clone http://github.com/peterb154/flask_docker_lab
   - cd flask_docker_lab
   - rm -r .git
@@ -37,10 +39,6 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
   - terraform plan
   - terraform apply
 7. Build the .travis.yml
-  - cp travis.yml.example .travis.ci
-  - ECR_CMD='aws ecr get-login --no-include-email --region us-west-2'
-  - travis env set ECR_DNS=`${ECR_CMD} | awk '{print$4}' | sed s/'https://'//`
-  - travis env set ECR_USER=`${ECR_CMD} | awk '{print$4}'`
-  - travis env set ECR_URL=`${ECR_CMD} | awk '{print$7}'`
-  - travis encrypt ECR_USER=`${ECR_CMD} | awk '{print$6}'` -add
-  -
+  - cp travis.yml.example .travis.ci # TODO: make sure we have an example file
+  - travis login # (enter github username and password)
+  - ./create_ecr_secrets.sh # create a secrets file and encrypt it
