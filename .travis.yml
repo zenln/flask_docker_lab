@@ -8,9 +8,7 @@ install:
 script:
 - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
 after_success:
-- docker login -u $ECR_USER -p $ECR_PASS $ECR_URL
-- docker tag flask_docker_lab:latest $ECR_DNS/flask_docker_lab:latest
-- docker push $ECR_DNS/flask_docker_lab_ecr:latest
+- docker_push.sh
 
 # REMOVE THE FOLLOWING BEFORE LAB COMMIT
 before_install:
