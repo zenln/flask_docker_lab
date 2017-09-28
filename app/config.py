@@ -13,12 +13,12 @@ PAGES=[
     {'title':'Lab Blog',
         'url':'https://www.cloudshiftstrategies.com/flaskdockerlab.html'},
     {'title':'Load Gen','route':'loadgen'},
+    {'title':'Bad Link','url':'http://something.wrong'},
     ]
 
 # Bootstrap CSS files to include in each page included in ./app/templates/base.html
 CSS_INCLUDES=[
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-#    'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css',
     'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css',
     'https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css',
     ]

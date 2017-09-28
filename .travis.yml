@@ -2,13 +2,14 @@ sudo: required
 language: python
 services: docker
 install:
-- pip install -r ./infrastructure/requirements-testsuite.txt
-- docker-compose build
-- docker-compose up -d
+  - pip install -r ./infrastructure/requirements-testsuite.txt
+  - docker-compose build
+  - docker-compose up -d
 script:
-- linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
-after_success:
-- "./docker_push.sh"
+  - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
+deploy:
+  - "./docker_push.sh"
+  on:
+    tags: true
 before_install:
-- openssl aes-256-cbc -K $encrypted_771bca74694a_key -iv $encrypted_771bca74694a_iv
-  -in ecr.secrets.enc -out ecr.secrets -d
+  - openssl aes-256-cbc -K $encrypted_771bca74694a_key -iv $encrypted_771bca74694a_iv -in ecr.secrets.enc -out ecr.secrets -d

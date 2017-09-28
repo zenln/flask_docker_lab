@@ -33,12 +33,26 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
   - change something
   - validate change in browser
 6. Configure AWS Infrastructure using terraform
-  - cd infrastructure
+  - cd ./infrastructure
   - TODO: create a terraform script
   - terraform init
   - terraform plan
   - terraform apply
 7. Build the .travis.yml
-  - cp travis.yml.example .travis.ci # TODO: make sure we have an example file
+  - cd ../
+  - #TODO: create an example travis.yml
+  - cp ./infrastructure/travis.yml.example .travis.ci
   - travis login # (enter github username and password)
   - ./create_ecr_secrets.sh # create a secrets file and encrypt it
+8. Tag and push our code
+  - git tag -a v1.0 -m "the first version of our application"
+  - git push origin v1.0
+  - Check travis-ci.org
+  - Check AWS ECR repository
+9. Induce an error
+  - edit ./app/config.py to induce a link error
+      {'title':'Bad Link','url':'http://something.wrong'},
+  - git add .
+  - git commit -m "added a bad page"
+  - git tag -a v1.1 -m "the second version of our application"
+  - git push origin v1.1
