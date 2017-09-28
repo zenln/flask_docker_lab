@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # We want this script to exit if we get any errors
 set -e
-set -x
 # This script pushes the built docker image to the repository
 
 # We should have secrets file created by create_ecr_secrets.sh, encoded
