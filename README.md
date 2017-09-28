@@ -50,9 +50,22 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
   - Check travis-ci.org
   - Check AWS ECR repository
 9. Induce an error
+  - git tag -a v1.1 -m "the second version of our application"
   - edit ./app/config.py to induce a link error
       {'title':'Bad Link','url':'http://something.wrong'},
   - git add .
-  - git commit -m "added a bad page"
-  - git tag -a v1.1 -m "the second version of our application"
-  - git push origin v1.1
+  - git commit -am "added a bad page"
+  - git push --tags
+  - Check out travis-ci.org - notice that the linktest failed
+  - confirm in AWS ECR that new version was not deployed
+10. Fix the error
+  - git tag -a v1.2 -m "the third version of our application"
+  - edit ./app/config.py to fix error
+      {'title':'Good Link','url':'http://www.google.com'},
+  - git add .
+  - git commit -am "changed to a good page"
+  - git push --tags
+  - Check out travis-ci.org build process, confirm it succeeded
+  - Check out AWS ECR, see new version 1.2 was created!
+11. Deploy our application to production
+  - ...

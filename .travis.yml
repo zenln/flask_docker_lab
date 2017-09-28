@@ -8,7 +8,8 @@ install:
 script:
   - linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
 deploy:
-  - "./docker_push.sh"
+  provider: script
+  script: "./docker_push.sh"
   on:
     tags: true
 before_install:
