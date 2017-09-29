@@ -1,0 +1,15 @@
+sudo: required
+language: python
+services: docker
+install:
+- pip install -r ./infrastructure/requirements-testsuite.txt
+- docker-compose build
+- docker-compose up -d
+script:
+- linkchecker --anchors --cookies --check-html --check-css http://localhost:5000
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: "./docker_push.sh"
+  on:
+    tags: true

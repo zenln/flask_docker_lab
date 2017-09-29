@@ -1,0 +1,34 @@
+{
+    "taskDefinition": {
+        "status": "ACTIVE", 
+        "family": "flask_docker_lab_td", 
+        "placementConstraints": [], 
+        "requiresAttributes": [
+            {
+                "name": "com.amazonaws.ecs.capability.ecr-auth"
+            }
+        ], 
+        "volumes": [], 
+        "taskDefinitionArn": "arn:aws:ecs:us-west-2:357849880876:task-definition/flask_docker_lab_td:59", 
+        "containerDefinitions": [
+            {
+                "environment": [], 
+                "name": "flask_docker_lab_container", 
+                "mountPoints": [], 
+                "image": "357849880876.dkr.ecr.us-west-2.amazonaws.com/flask_docker_lab:v1.0", 
+                "cpu": 0, 
+                "portMappings": [
+                    {
+                        "protocol": "tcp", 
+                        "containerPort": 5000, 
+                        "hostPort": 0
+                    }
+                ], 
+                "memory": 128, 
+                "essential": true, 
+                "volumesFrom": []
+            }
+        ], 
+        "revision": 59
+    }
+}

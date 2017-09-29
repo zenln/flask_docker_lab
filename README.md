@@ -4,11 +4,11 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
 
 1. github account setup
   - Create a new github account (if you dont already have one)
-  - create new repository flask_docker_lab (public/no readme)
+  - fork repository flask_docker_lab github.com/peterb154/flask_docker_lab
 2. travis-ci account setup
-  - Create a new travis-ci.org account if you dont already have one
+  - Create a new travis-ci.org account if you don't already have one
   - link travis-ci to github
-  - add flask_docker_lab project
+  - add your flask_docker_lab project
 3. AWS account setup
   - Create a new AWS free tier account if you don't already have one
 4. Setup developer workstation
@@ -19,14 +19,9 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
     or vnc to <public_ip>:5901 pass:dockerlab (easier)
 5. Download the code and make it your own
   - git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
-  - git clone http://github.com/peterb154/flask_docker_lab
+  - git config --global user.name "Your Name"
+  - git clone http://github.com/${user}/flask_docker_lab
   - cd flask_docker_lab
-  - rm -r .git
-  - git init
-  - git add .
-  - git remote add origin https://github.com/${github_username}/flask_docker_lab.git
-  - git push origin master (NOTE: if .travis.yml present, will cause a travis build...)
 6. Check out the application locally
   - docker-compose up
   - Browser: http://localhost:5000
@@ -34,7 +29,20 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
   - validate change in browser
 6. Configure AWS Infrastructure using terraform
   - cd ./infrastructure
+  - ssh-keygen
   - TODO: create a terraform script
+    - Create a VPC
+    - Create Internet Gateway
+    - Create subnets
+    - Create Routing table
+    - Create Security Group
+    - Create a repository
+    - Create a cluster
+    - Create a task definition
+    - Create an ALB
+    - Create a Target Group
+    - Create a Launch Configuration
+    - Create an autoscaling group
   - terraform init
   - terraform plan
   - terraform apply
