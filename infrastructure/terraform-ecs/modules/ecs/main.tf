@@ -32,6 +32,6 @@ resource "aws_ecs_cluster" "cluster" {
   name = "${var.cluster}_ecs_cluster"
 }
 
-resourc "aws_ecr_repository" "repository" {
+resource "aws_ecr_repository" "repository" {
   name = "${var.project}_repository"
 }

@@ -1,13 +1,13 @@
 #!/bin/sh -e
 
 #Usage: TAG=docker_container_tag [create|update]
-DOCKER_COMPOSE='../../../docker-compose.yaml'
+DOCKER_COMPOSE='../../docker-compose.yaml'
 if [ ! -f ${DOCKER_COMPOSE} ]; then
   echo "Error, cant find file ${DOCKER_COMPOSE}"
   exit 1
 fi
 
-TFVARS='../terraform.tfvars'
+TFVARS='../terraform-ecs/terraform.tfvars'
 if [ ! -f ${TFVARS} ]; then
   echo "Error, cant find file ${TFVARS}"
   exit 2
