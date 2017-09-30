@@ -33,5 +33,5 @@ resource "aws_ecs_cluster" "cluster" {
 }
 
 resourc "aws_ecr_repository" "repository" {
-  name = "${var.project}_repository"
+  name = "${var.project}"
 }

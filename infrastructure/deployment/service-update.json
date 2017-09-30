@@ -1,0 +1,10 @@
+{
+    "cluster": "@PROJECT@_@ENVIRONMENT@_ecs_cluster",
+    "service": "@IMAGE@_svc",
+    "taskDefinition": "@TASKDEFINITION_ARN@",
+    "desiredCount": 2,
+    "deploymentConfiguration": {
+        "maximumPercent": 100,
+        "minimumHealthyPercent": 50
+    }
+}
