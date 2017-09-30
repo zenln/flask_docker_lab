@@ -30,19 +30,6 @@ This is a basic Flask web application that will be deployed to AWS ECS using doc
 6. Configure AWS Infrastructure using terraform
   - cd ./infrastructure
   - ssh-keygen
-  - TODO: create a terraform script
-    - Create a VPC
-    - Create Internet Gateway
-    - Create subnets
-    - Create Routing table
-    - Create Security Group
-    - Create a repository
-    - Create a cluster
-    - Create a task definition
-    - Create an ALB
-    - Create a Target Group
-    - Create a Launch Configuration
-    - Create an autoscaling group
   - terraform init
   - terraform plan
   - terraform apply
