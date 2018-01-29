@@ -22,7 +22,7 @@
 	send "dockerlab\r"
 	expect "Verify password:"
 	send "dockerlab\r"
-	expect "Write password to /home/ubuntu/.vnc/passwd?  [y]/n"
+	expect "Write password to /home/ubuntu/.vnc/passwd?"
 	send "y\r"
 	expect eof
 	exit
