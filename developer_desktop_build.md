@@ -1,49 +1,49 @@
-# Start with ubunto 17.04
+# Start with ubunto 16.04 ami
 
 	us-west-2 `ami-1ee65166`
 
 # Update the installation
 
-		sudo apt-get -y update
-		sudo apt-get -y upgrade
-		#sudo apt-get -y install ubuntu-desktop
-		sudo apt-get -y install lubuntu-desktop
+	sudo apt-get -y update
+	sudo apt-get -y upgrade
+	#sudo apt-get -y install ubuntu-desktop
+	sudo apt-get -y install lubuntu-desktop
 
 # Install tightvnc server
 
-		sudo apt-get -y install tightvncserver expect
+	sudo apt-get -y install tightvncserver expect
 		
-		# Set the vnc password
-		expect <<EOF
-		spawn vncserver
-		expect "Password:"
-		send "dockerlab/r"
-		expect "Assign:"
-		send "dockerlab/r"
-		expect "Would you like to enter a view-only password (y/n)?"
-		send "n"
-		expect eof
-		exit
-		EOF
+	# Set the vnc password
+	expect <<EOF
+	spawn vncserver
+	expect "Password:"
+	send "dockerlab/r"
+	expect "Assign:"
+	send "dockerlab/r"
+	expect "Would you like to enter a view-only password (y/n)?"
+	send "n"
+	expect eof
+	exit
+	EOF
 
-		# Configure the startup file
-		cat <<EOF > /lib/systemd/system/vncserver.service
-		[Unit]
-		Description=Start tightvnc server at startup.
-		After=multi-user.target
+	# Configure the startup file
+	cat <<EOF > /lib/systemd/system/vncserver.service
+	[Unit]
+	Description=Start tightvnc server at startup.
+	After=multi-user.target
 
-		[Service]
-		Type=simple
-		ExecStart=/bin/su - ubuntu -c "/usr/bin/vncserver :1"
+	[Service]
+	Type=simple
+	ExecStart=/bin/su - ubuntu -c "/usr/bin/vncserver -depth 16 -geometry 1280x786 :1"
 
-		[Install]
-		WantedBy=multi-user.target
-		EOF
+	[Install]
+	WantedBy=multi-user.target
+	EOF
 
-		sudo chmod +x /lib/systemd/system/vncserver.service
-		sudo systemctl daemon-reload
-		sudo systemctl enable vncserver.service
-		sudo systemctl start vncserver.service
+	sudo chmod +x /lib/systemd/system/vncserver.service
+	sudo systemctl daemon-reload
+	sudo systemctl enable vncserver.service
+	sudo systemctl start vncserver.service
 
 		# Disable the screen saver
 		cat <<EOF > ~./xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
