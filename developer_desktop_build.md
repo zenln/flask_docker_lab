@@ -18,12 +18,12 @@
 
 	expect <<EOF
 	spawn x11vnc -storepasswd
-	expect "Password:"
+	expect "Enter VNC password:"
 	send "dockerlab\r"
-	expect "Verify:"
+	expect "Verify password:"
 	send "dockerlab\r"
-	expect "Would you like to enter a view-only password (y/n)?"
-	send "n\r"
+	expect "Write password to /home/ubuntu/.vnc/passwd?  [y]/n"
+	send "y\r"
 	expect eof
 	exit
 	EOF
