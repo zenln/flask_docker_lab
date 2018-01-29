@@ -11,41 +11,6 @@
 
 	sudo apt-get -y install lubuntu-desktop
 
-# Install xllvnc server
-
-	sudo apt-get -y install x11vnc xserver-xorg-video-dummy expect
-
-	expect <<EOF
-	spawn x11vnc -storepasswd
-	expect "Enter VNC password:"
-	send "dockerlab\r"
-	expect "Verify password:"
-	send "dockerlab\r"
-	expect "Write password to /home/ubuntu/.vnc/passwd?"
-	send "y\r"
-	expect eof
-	exit
-	EOF
-
-	cat << EOF > x11vnc.service
-	[Unit]
-	Description=Start x11vnc at startup.
-	After=multi-user.target
-
-	[Service]
-	Type=simple
-	ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -rfbauth /home/ubuntu/.vnc/passwd -rfbport 5901 -shared
-
-	[Install]
-	WantedBy=multi-user.target
-	EOF
-
-	sudo mv x11vnc.service /lib/systemd/system/x11vnc.service
-	sudo chmod +x /lib/systemd/system/x11vnc.service
-	sudo systemctl daemon-reload
-	sudo systemctl enable x11vnc.service
-	sudo systemctl start x11vnc.service
-
 # Install tightvnc server
 
 	sudo apt-get -y install tightvncserver expect
@@ -63,10 +28,12 @@
 	exit
 	EOF
 
+	# Kill the VNC server that just started
 	vncserver -kill :1
 
-	# configure lubuntu desktop to start
-	echo "/usr/bin/startlxde" >> ~/.vnc/xstartup
+	# configure lubuntu desktop to start when vnc starts
+	echo "lxterminal &" >> ~/.vnc/xstartup
+	echo "/usr/bin/lxsession -s LXDE &" >> ~/.vnc/xstartup
 
 	# Configure the startup file
 	cat <<EOF > vncserver.service
@@ -88,7 +55,8 @@
 	sudo systemctl enable vncserver.service
 	sudo systemctl start vncserver.service
 
-	# Disable the screen saver
+# Disable the screen saver
+
 	cat <<EOF > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<channel name="xfce4-power-manager" version="1.0">
@@ -100,43 +68,6 @@
 	</channel>
 	EOF
 
-# Install NoVNC web server
-
-	#cd /usr/share
-	#sudo git clone https://github.com/novnc/noVNC.git
-	#cd noVNC
-	#sudo ln -s vnc.html index.html
-	#
-	#sudo su
-	#
-	#cat << EOF > launchAWS.sh
-	#VNC_HOST=`curl -s http://169.254.169.254/latest/meta-data/public-ipv4`
-	#VNC_PORT=5901
-	#HTTP_PORT=8901
-	#./utils/launch.sh --vnc ${VNC_HOST}:${VNC_PORT} --listen ${HTTP_PORT}
-	#EOF
-	#	
-	#sudo chmod +x launchAWS.sh
-	#	
-	#cat << EOF > /lib/systemd/system/noVNC.service
-	#[Unit]
-	#Description=Start noVNC websockets server
-	#After=multi-user.target
-	#	
-	#[Service]
-	#Type=simple
-	#ExecStart=/usr/share/noVNC/launchAWS.sh
-	#	
-	#[Install]
-	#WantedBy=multi-user.target
-	#EOF
-	#
-	#chmod +x /lib/systemd/system/noVNC.service
-	#sudo systemctl daemon-reload
-	#sudo systemctl enable noVNC.service
-	#sudo systemctl start noVNC.service
-	#echo "autologin-user=ubuntu" >> /etc/llightdm/lightdm.conf
-
 # Configure Terminal to use the Solarized Theme
 
 	sed -i ~/.config/lxtermain/lxterminal.conf s/"^color_preset=*"/"color_preset=Solarized"/
@@ -147,12 +78,17 @@
 	sudo apt-get update
 	sudo apt-get install -y atom
 
+	# Atom wont work over VNC unless we run this:
+	# https://github.com/atom/atom/issues/4360
+	sudo cp /usr/lib/x86_64-linux-gnu/libxcb.so.1 /opt/atom/
+	sudo sed -i 's/BIG-REQUESTS/_IG-REQUESTS/' /opt/atom/libxcb.so.1
+
 	# now run atom from cmd line and pin to taskbar
 
 # Install Docker-CE
 
 	sudo apt-get update
-	sudo apt-get install \
+	sudo apt-get install -y \
 		apt-transport-https \
 		ca-certificates \
 		curl \
