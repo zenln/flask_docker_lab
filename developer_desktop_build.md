@@ -21,12 +21,14 @@
 	expect "Password:"
 	send "dockerlab\r"
 	expect "Verify:"
-	send "dockerlab\"r
+	send "dockerlab\r"
 	expect "Would you like to enter a view-only password (y/n)?"
 	send "n\r"
 	expect eof
 	exit
 	EOF
+
+	vncserver -kill :1
 
 	# Configure the startup file
 	cat <<EOF > vncserver.service
