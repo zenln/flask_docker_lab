@@ -11,6 +11,42 @@
 
 	sudo apt-get -y install lubuntu-desktop
 
+# Install xllvnc server
+
+	sudo apt-get -y install x11vnc
+	sudo apt-get install xserver-xorg-video-dummy
+
+	expect <<EOF
+	spawn x11vnc -storepasswd
+	expect "Password:"
+	send "dockerlab\r"
+	expect "Verify:"
+	send "dockerlab\r"
+	expect "Would you like to enter a view-only password (y/n)?"
+	send "n\r"
+	expect eof
+	exit
+	EOF
+
+	cat << EOF > /lib/systemd/system/x11vnc.service
+	[Unit]
+	Description=Start x11vnc at startup.
+	After=multi-user.target
+
+	[Service]
+	Type=simple
+	ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -rfbauth /home/ubuntu/.vnc/passwd -rfbport 5901 -shared
+
+	[Install]
+	WantedBy=multi-user.target
+	EOF
+
+	sudo mv x11vnc.service /lib/systemd/system/x11vnc.service
+	sudo chmod +x /lib/systemd/system/x11vnc.service
+	sudo systemctl daemon-reload
+	sudo systemctl enable x11vnc.service
+	sudo systemctl start x11vnc.service
+
 # Install tightvnc server
 
 	sudo apt-get -y install tightvncserver expect
@@ -29,6 +65,9 @@
 	EOF
 
 	vncserver -kill :1
+
+	# configure lubuntu desktop to start
+	echo "/usr/bin/startlxde" >> ~/.vnc/xstartup
 
 	# Configure the startup file
 	cat <<EOF > vncserver.service
@@ -51,7 +90,7 @@
 	sudo systemctl start vncserver.service
 
 	# Disable the screen saver
-	cat <<EOF > ~./xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+	cat <<EOF > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<channel name="xfce4-power-manager" version="1.0">
 		<property name="xfce4-power-manager" type="empty">
@@ -61,32 +100,6 @@
 		</property>
 	</channel>
 	EOF
-
-
-# Or install x11 VNC
-
-	#sudo apt-get -y install x11vnc
-	#sudo apt-get install xserver-xorg-video-dummy
-	#
-	#x11vnc -storepasswd
-	#sudo su
-	#cat << EOF > /lib/systemd/system/x11vnc.service
-	#[Unit]
-	#Description=Start x11vnc at startup.
-	#After=multi-user.target
-	#
-	#[Service]
-	#Type=simple
-	#ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -rfbauth /home/ubuntu/.vnc/passwd -rfbport 5901 -shared
-	#
-	#[Install]
-	#WantedBy=multi-user.target
-	#EOF
-	#
-	#sudo chmod +x /lib/systemd/system/x11vnc.service
-	#sudo systemctl daemon-reload
-	#sudo systemctl enable x11vnc.service
-	#sudo systemctl start x11vnc.service
 
 # Install NoVNC web server
 
@@ -125,11 +138,15 @@
 	#sudo systemctl start noVNC.service
 	#echo "autologin-user=ubuntu" >> /etc/llightdm/lightdm.conf
 
+# Configure Terminal to use the Solarized Theme
+
+	sed -i ~/.config/lxtermain/lxterminal.conf s/"^color_preset=*"/"color_preset=Solarized"/
+
 # Install Atom IDE
 
-	sudo add-apt-repository ppa:webupd8team/atom
+	sudo add-apt-repository -y ppa:webupd8team/atom
 	sudo apt-get update
-	sudo apt-get install atom
+	sudo apt-get install -y atom
 
 	# now run atom from cmd line and pin to taskbar
 
