@@ -29,7 +29,7 @@
 	EOF
 
 	# Configure the startup file
-	cat <<EOF > /lib/systemd/system/vncserver.service
+	cat <<EOF > vncserver.service
 	[Unit]
 	Description=Start tightvnc server at startup.
 	After=multi-user.target
@@ -42,6 +42,7 @@
 	WantedBy=multi-user.target
 	EOF
 
+	sudo mv vncserver.service /lib/systemd/system/vncserver.service
 	sudo chmod +x /lib/systemd/system/vncserver.service
 	sudo systemctl daemon-reload
 	sudo systemctl enable vncserver.service
