@@ -60,63 +60,65 @@
 
 # Or install x11 VNC
 
-	sudo apt-get -y install x11vnc
-	sudo apt-get install xserver-xorg-video-dummy
-
-	x11vnc -storepasswd
-	sudo su
-	cat << EOF > /lib/systemd/system/x11vnc.service
-	[Unit]
-	Description=Start x11vnc at startup.
-	After=multi-user.target
-
-	[Service]
-	Type=simple
-	ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -rfbauth /home/ubuntu/.vnc/passwd -rfbport 5901 -shared
-
-	[Install]
-	WantedBy=multi-user.target
-	EOF
-
-	sudo chmod +x /lib/systemd/system/x11vnc.service
-	sudo systemctl daemon-reload
-	sudo systemctl enable x11vnc.service
-	sudo systemctl start x11vnc.service
+	#sudo apt-get -y install x11vnc
+	#sudo apt-get install xserver-xorg-video-dummy
+	#
+	#x11vnc -storepasswd
+	#sudo su
+	#cat << EOF > /lib/systemd/system/x11vnc.service
+	#[Unit]
+	#Description=Start x11vnc at startup.
+	#After=multi-user.target
+	#
+	#[Service]
+	#Type=simple
+	#ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -rfbauth /home/ubuntu/.vnc/passwd -rfbport 5901 -shared
+	#
+	#[Install]
+	#WantedBy=multi-user.target
+	#EOF
+	#
+	#sudo chmod +x /lib/systemd/system/x11vnc.service
+	#sudo systemctl daemon-reload
+	#sudo systemctl enable x11vnc.service
+	#sudo systemctl start x11vnc.service
 
 # Install NoVNC web server
 
-	cd /usr/share
-	sudo git clone https://github.com/novnc/noVNC.git
-	cd noVNC
-	sudo ln -s vnc.html index.html
-
-	cat << EOF > launchAWS.sh
-	VNC_HOST=`curl -s http://169.254.169.254/latest/meta-data/public-ipv4`
-	VNC_PORT=5901
-	HTTP_PORT=8901
-	./utils/launch.sh --vnc ${VNC_HOST}:${VNC_PORT} --listen ${HTTP_PORT}
-	EOF
-		
-	sudo chmod +x launchAWS.sh
-		
-	cat << EOF > /lib/systemd/system/noVNC.service
-	[Unit]
-	Description=Start noVNC websockets server
-	After=multi-user.target
-		
-	[Service]
-	Type=simple
-	ExecStart=/usr/share/noVNC/launchAWS.sh
-		
-	[Install]
-	WantedBy=multi-user.target
-	EOF
-
-	chmod +x /lib/systemd/system/noVNC.service
-	sudo systemctl daemon-reload
-	sudo systemctl enable noVNC.service
-	sudo systemctl start noVNC.service
-	echo "autologin-user=ubuntu" >> /etc/llightdm/lightdm.conf
+	#cd /usr/share
+	#sudo git clone https://github.com/novnc/noVNC.git
+	#cd noVNC
+	#sudo ln -s vnc.html index.html
+	#
+	#sudo su
+	#
+	#cat << EOF > launchAWS.sh
+	#VNC_HOST=`curl -s http://169.254.169.254/latest/meta-data/public-ipv4`
+	#VNC_PORT=5901
+	#HTTP_PORT=8901
+	#./utils/launch.sh --vnc ${VNC_HOST}:${VNC_PORT} --listen ${HTTP_PORT}
+	#EOF
+	#	
+	#sudo chmod +x launchAWS.sh
+	#	
+	#cat << EOF > /lib/systemd/system/noVNC.service
+	#[Unit]
+	#Description=Start noVNC websockets server
+	#After=multi-user.target
+	#	
+	#[Service]
+	#Type=simple
+	#ExecStart=/usr/share/noVNC/launchAWS.sh
+	#	
+	#[Install]
+	#WantedBy=multi-user.target
+	#EOF
+	#
+	#chmod +x /lib/systemd/system/noVNC.service
+	#sudo systemctl daemon-reload
+	#sudo systemctl enable noVNC.service
+	#sudo systemctl start noVNC.service
+	#echo "autologin-user=ubuntu" >> /etc/llightdm/lightdm.conf
 
 # Install Atom IDE
 
