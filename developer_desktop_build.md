@@ -6,6 +6,9 @@
 
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
+
+# Install lubuntu Desktop
+
 	sudo apt-get -y install lubuntu-desktop
 
 # Install tightvnc server
