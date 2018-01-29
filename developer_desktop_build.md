@@ -1,12 +1,11 @@
-# Start with ubunto 16.04 ami
+# Start with ubunto 17.10 ami
 
-	us-west-2 `ami-1ee65166`
+	us-west-2 ami-2eb40856
 
 # Update the installation
 
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
-	#sudo apt-get -y install ubuntu-desktop
 	sudo apt-get -y install lubuntu-desktop
 
 # Install tightvnc server
@@ -17,11 +16,11 @@
 	expect <<EOF
 	spawn vncserver
 	expect "Password:"
-	send "dockerlab/r"
-	expect "Assign:"
-	send "dockerlab/r"
+	send "dockerlab\r"
+	expect "Verify:"
+	send "dockerlab\"r
 	expect "Would you like to enter a view-only password (y/n)?"
-	send "n"
+	send "n\r"
 	expect eof
 	exit
 	EOF
