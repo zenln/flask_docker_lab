@@ -13,8 +13,7 @@
 
 # Install xllvnc server
 
-	sudo apt-get -y install x11vnc
-	sudo apt-get install xserver-xorg-video-dummy
+	sudo apt-get -y install x11vnc xserver-xorg-video-dummy expect
 
 	expect <<EOF
 	spawn x11vnc -storepasswd
@@ -28,7 +27,7 @@
 	exit
 	EOF
 
-	cat << EOF > /lib/systemd/system/x11vnc.service
+	cat << EOF > x11vnc.service
 	[Unit]
 	Description=Start x11vnc at startup.
 	After=multi-user.target
