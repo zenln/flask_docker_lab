@@ -1,0 +1,28 @@
+{
+	"builders": [{
+		"type": "amazon-ebs",
+		"region": "us-west-2",
+		"source_ami_filter": {
+			"filters": {
+				"virtualization-type": "hvm",
+				"name": "ubuntu/images/hvm-ssd/ubuntu-artful-17.10-amd64-server-*",
+				"root-device-type": "ebs"
+			},
+			"most_recent": true
+		},
+	"instance_type": "t2.micro",
+	"ssh_username": "ubuntu",
+	"ami_name": "flask_docker_lab/developer_desktop-{{timestamp}}"
+	}],
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "./css.profile.tgz",
+			"destination": "/home/ubuntu/css.profile.tgz"
+		},
+		{
+			"type": "shell",
+			"script": "./css.profile.sh"
+		}
+	]
+}
