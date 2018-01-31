@@ -24,7 +24,10 @@ vncserver -kill :1
 # configure lubuntu desktop to start when vnc starts
 # Assumes lubuntu lxde is installed
 mv ~/.vnc/xstartup ~/.vnc/xstartup.orig
-grep -v Xsession ~/.vnc/xstartup.orig > ~/.vnc/xstartup
+echo "#!/bin/sh" > ~/.vnc/xstartup
+echo "xrdb $HOME/.Xresources" >> ~/.vnc/xstartup
+echo "xsetroot -solid grey" >> ~/.vnc/xstartup
+echo "export XKL_XMODMAP_DISABLE=1" >> ~/.vnc/xstartup
 echo "lxterminal &" >> ~/.vnc/xstartup
 echo "/usr/bin/lxsession -s LXDE &" >> ~/.vnc/xstartup
 

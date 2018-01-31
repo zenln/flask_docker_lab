@@ -8,6 +8,6 @@
 
 # unpack all the configurations for our desktop
 cd /home/ubuntu
-chown ubunu css.profile.tgz
+chown ubuntu css.profile.tgz
 sudo -u ubuntu tar zxvf css.profile.tgz
 rm css.profile.tgz
