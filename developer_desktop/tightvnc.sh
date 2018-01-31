@@ -3,7 +3,12 @@
 
 sudo apt-get -y install tigervnc-standalone-server expect
 
-touch ~/.Xauthority
+touch /home/ubuntu/.Xauthority
+chown ubuntu:ubuntu /home/ubuntu/.Xauthority
+touch /home/ubuntu/.Xresources
+chown ubuntu:ubuntu /home/ubuntu/.Xresources
+mkdir -p /run/user/1000
+chown ubuntu:ubuntu /run/user/1000
 		
 # Set the vnc password
 expect <<EOF
@@ -28,7 +33,7 @@ echo "#!/bin/sh" > ~/.vnc/xstartup
 echo "xrdb $HOME/.Xresources" >> ~/.vnc/xstartup
 echo "xsetroot -solid grey" >> ~/.vnc/xstartup
 echo "export XKL_XMODMAP_DISABLE=1" >> ~/.vnc/xstartup
-echo "lxterminal &" >> ~/.vnc/xstartup
+#echo "lxterminal &" >> ~/.vnc/xstartup
 echo "/usr/bin/lxsession -s LXDE &" >> ~/.vnc/xstartup
 
 # Configure the startup file
@@ -49,20 +54,3 @@ sudo mv vncserver.service /lib/systemd/system/vncserver.service
 sudo systemctl daemon-reload
 sudo systemctl enable vncserver.service
 sudo systemctl start vncserver.service
-
-# Disable the screen saver
-mkdir -p /home/ubuntu/.config/xfce4/xfconf/xfce-perchannel-xml/
-cat <<EOF > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
-<?xml version="1.0" encoding="UTF-8"?>
-<channel name="xfce4-power-manager" version="1.0">
-	<property name="xfce4-power-manager" type="empty">
-	<property name="power-button-action" type="empty"/>
-	<property name="logind-handle-lid-switch" type="bool" value="false"/>
-	<property name="lock-screen-suspend-hibernate" type="bool" value="false"/>
-</property>
-</channel>
-EOF
-
-# Configure Terminal to use the Solarized Theme
-
-#sed -i ~/.config/lxtermain/lxterminal.conf s/"^color_preset=*"/"color_preset=Solarized"/
