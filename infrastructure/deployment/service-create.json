@@ -4,7 +4,7 @@
     "taskDefinition": "@TASKDEFINITION_ARN@",
     "desiredCount": 2,
     "deploymentConfiguration": {
-        "maximumPercent": 100,
+        "maximumPercent": 200,
         "minimumHealthyPercent": 50
     },
     "role": "/ecs/@PROJECT@_@ENVIRONMENT@_ecs_alb_role",
